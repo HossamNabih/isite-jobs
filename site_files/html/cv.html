@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head x-import="head.html"></head>
+
+<body>
+    <nav class="navbar ##session.lang## " x-import="navbar.html" ng-controller="navbar"></nav>
+
+    <div x-features="login" class="posts center padding" ng-controller="cvController">
+        <div class="row">
+            <div class="col2"></div>
+            <div class="col8">
+                <div class="post padding border margin center" >
+                    <div class="container">
+                        <div class="row">
+                            
+                            <div class="col-md-10 col-md-offset-1">
+                               <h1>
+                                   Adding / Edit  Your CV
+                               </h1>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                            <label for="user_name">
+                                                    Your name
+                                            </label>
+                                        <input name="user_name" ng-model="cv.user_name">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="fb">
+                                             Facebook
+                                        </label>
+                                        <input name = "fb" ng-model="cv.socail.fb_url">
+                                        <br>
+                                        <label for="ln">
+                                                Linkedin
+                                           </label>
+                                           <input name = "ln" ng-model="cv.socail.ln_url">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="about">
+                                             About 
+                                        </label>
+                                    
+                                        <textarea name="about" class="form-control"  ng-model="cv.about"></textarea>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-lg btn-block" ng-click="createOrEditCV()">add new</button>
+
+                              
+                        </div>
+                    </div>
+            
+            
+                </div>
+
+                
+
+
+                </div>
+            </div>
+           
+        </div>
+
+    </div>
+
+    <div x-import="scripts.html"></div>
+    <script>
+        var app = app || angular.module('myApp', [])
+        app.controller('cvController', ($scope, $http) => {
+            $scope.cv = {}
+            $scope.createOrEditCV = function () {
+                $http({
+                    method: 'POST',
+                    url: '/api/my_cv',
+                    data: {}
+                }).then(function (response) {
+
+                    $scope.cv = response.data.data
+                    console.log(response)
+
+                });
+            };
+            $scope.createOrEditCV();
+
+        })
+    </script>
+</body>
+
+</html>

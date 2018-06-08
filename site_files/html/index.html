@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head x-import="head.html"></head>
+
+<body>
+    <nav class="navbar ##session.lang## " x-import="navbar.html" ng-controller="navbar"></nav>
+
+    <div x-features="login" class="posts center padding" ng-controller="JobController">
+        <div class="row">
+            <div class="col2"></div>
+            <div class="col8">
+                <div class="post padding border margin center" >
+                    <div class="container">
+                        <div class="row">
+                            
+                            <div class="col-md-10 col-md-offset-1">
+                               <h1>
+                                   Adding a new job
+                               </h1>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="name">
+                                            Job name
+                                        </label>
+                                        <input name="name" class="form-control" type="text" ng-model="jobs.name" />
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="description">
+                                             Job  Description
+                                        </label>
+                                    
+                                        <textarea name="description" class="form-control" type="text" ng-model="jobs.description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="description">
+                                             Job  Details
+                                        </label>
+                                    
+                                        <textarea name="description" class="form-control" type="text" ng-model="jobs.description"></textarea>
+                                    </div>
+                                </div>
+
+                              
+                        </div>
+                    </div>
+            
+            
+                </div>
+
+                
+
+
+                </div>
+            </div>
+           
+        </div>
+
+    </div>
+
+    <div x-import="scripts.html"></div>
+    <script>
+        var app = app || angular.module('myApp', [])
+        app.controller('JobController', ($scope, $http) => {
+
+
+        $scope.getJobs = function () {  
+        $http({
+                    method: 'GET',
+                    url: '/api/jobs',
+                }).then(function (response) {
+                    $scope.jobs = response.data
+                })
+            }
+            $scope.CreateJob = function () {
+                $http({
+                    method: 'POST',
+                    url: '/api/Createjob',
+                    data: {}
+                }).then(function (response) {
+
+                    $scope.jobs.push(response.data.data)
+
+                });
+            };
+
+            $scope.getJobs();
+
+        })
+    </script>
+</body>
+
+</html>
